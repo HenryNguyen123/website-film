@@ -16,8 +16,6 @@ export default function AppContext({children}) {
     const [dataId, setDataId] = useState()
     const [history, setHistory] = useState(initialStateHistory)
 
-    console.log('history: ' + history)
-
 
     useEffect(() => {
         localStorage.setItem("movie_seen", JSON.stringify(history))
