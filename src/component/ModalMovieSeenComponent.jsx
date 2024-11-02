@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useContext } from "react";
 import { Context } from "../../until/AppContext";
 import { Trash } from "react-bootstrap-icons";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 ModalMovieSeenComponent.propTypes = {
@@ -13,7 +15,15 @@ ModalMovieSeenComponent.propTypes = {
 export default function ModalMovieSeenComponent({lgShow, setLgShow}) {
 
     const {history, setHistory} = useContext(Context)
-    console.log(history)
+
+
+    const handleDeleteMovie = (idmovie) =>{
+
+        if (idmovie > -1) {
+            setHistory((current) => current.filter((v, k) => k!=idmovie))
+            toast('Delete movie film successfully')
+        }
+    }
 
     return(
         <>
@@ -39,7 +49,7 @@ export default function ModalMovieSeenComponent({lgShow, setLgShow}) {
                                             <p>{vaule.overview}</p>
                                             <p>Ngày khởi chiếu: {vaule.release_date}</p>
                                         </div>
-                                        <Badge bg="danger" style={{cursor : 'pointer'}}>
+                                        <Badge bg="danger" style={{cursor : 'pointer'}} onClick={() => handleDeleteMovie(key) }>
                                             <Trash></Trash>
                                         </Badge>
                                     </ListGroup.Item>
@@ -51,6 +61,8 @@ export default function ModalMovieSeenComponent({lgShow, setLgShow}) {
                     </ListGroup>
                 </Modal.Body>
             </Modal>
+
+            <ToastContainer></ToastContainer>
         </>
     )
 }
